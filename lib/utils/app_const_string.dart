@@ -1,5 +1,6 @@
 part of 'design_utils.dart';
 
+const String whatsAppClone = "WhatsApp Clone";
 
 /// Welcome Screen Strings
 const String welcomeToWhatsAppClone = "Welcome to WhatsApp Clone";
@@ -23,3 +24,9 @@ const String enter6DigitCode = "Enter your 6 digit code";
 const String profileInfo = "Profile Info";
 const String pleaseProvideNameAndOptionalPhoto = "Please provide your name and an optional Profile photo";
 const String enterYourName = "Enter your name";
+
+
+const String yourChatListEndHere =  "--- Your chat list end here ---";
+const String yourStatusListEndHere =  "--- Your status list end here ---";
+
+const String recentUpdates = "Recent updates";

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:whatsappc/presentation/screens/homeScreen/home_screen.dart';
 import 'package:whatsappc/utils/design_utils.dart';
-
 
 class SetInitialProfileScreen extends StatefulWidget {
   const SetInitialProfileScreen({super.key});
 
   @override
-  State<SetInitialProfileScreen> createState() => _SetInitialProfileScreenState();
+  State<SetInitialProfileScreen> createState() =>
+      _SetInitialProfileScreenState();
 }
 
 class _SetInitialProfileScreenState extends State<SetInitialProfileScreen> {
-
   TextEditingController _nameController = TextEditingController();
 
   @override
@@ -22,8 +22,10 @@ class _SetInitialProfileScreenState extends State<SetInitialProfileScreen> {
           children: <Widget>[
             Text(
               profileInfo,
-              style: AppTextTheme.text18.copyWith(color: greenColor,
-                fontWeight: FontWeight.bold,),
+              style: AppTextTheme.text18.copyWith(
+                color: greenColor,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(
               height: 20,
@@ -42,7 +44,14 @@ class _SetInitialProfileScreenState extends State<SetInitialProfileScreen> {
                 alignment: Alignment.bottomCenter,
                 child: MaterialButton(
                   color: greenColor,
-                  onPressed: (){},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const HomeScreen(),
+                      ),
+                    );
+                  },
                   child: Text(
                     next,
                     style: AppTextTheme.text18.copyWith(color: whiteColor),

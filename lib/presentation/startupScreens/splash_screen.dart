@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:whatsappc/presentation/startupScreens/welcome_screen.dart';
+import 'package:whatsappc/utils/design_utils.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -33,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: Colors.black,
       body: Center(
         child: Text(
-          "WhatsApp Clone",
+          whatsAppClone,
           style: TextStyle(
             fontSize: 20,
             color: Colors.white

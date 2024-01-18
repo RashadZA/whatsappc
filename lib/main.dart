@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:whatsappc/presentation/startupScreens/splash_screen.dart';
+import 'package:whatsappc/utils/design_utils.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,11 +14,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
-        useMaterial3: true,
-      ),
+      title: whatsAppClone,
+      theme: appTheme,
       home: const SplashScreen(),
     );
   }
