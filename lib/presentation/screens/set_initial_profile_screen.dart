@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:whatsappc/presentation/bloc/phoneAuth/phone_auth_cubit.dart';
 import 'package:whatsappc/presentation/screens/homeScreen/home_screen.dart';
 import 'package:whatsappc/utils/design_utils.dart';
 
 class SetInitialProfileScreen extends StatefulWidget {
-  const SetInitialProfileScreen({super.key});
+  final String phoneNumber;
+   const SetInitialProfileScreen({super.key, required this.phoneNumber});
 
   @override
   State<SetInitialProfileScreen> createState() =>
@@ -11,6 +14,9 @@ class SetInitialProfileScreen extends StatefulWidget {
 }
 
 class _SetInitialProfileScreenState extends State<SetInitialProfileScreen> {
+
+  String get _phoneNumber => widget.phoneNumber;
+
   TextEditingController _nameController = TextEditingController();
 
   @override
@@ -44,14 +50,7 @@ class _SetInitialProfileScreenState extends State<SetInitialProfileScreen> {
                 alignment: Alignment.bottomCenter,
                 child: MaterialButton(
                   color: greenColor,
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => const HomeScreen(),
-                      ),
-                    );
-                  },
+                  onPressed: _submitProfileInfo,
                   child: Text(
                     next,
                     style: AppTextTheme.text18.copyWith(color: whiteColor),
@@ -101,6 +100,15 @@ class _SetInitialProfileScreenState extends State<SetInitialProfileScreen> {
       ],
     );
   }
+  void _submitProfileInfo() {
+    if (_nameController.text.isNotEmpty) {
+      BlocProvider.of<PhoneAuthCubit>(context).submitProfileInfo(
+          profileUrl: "",
+          phoneNumber: _phoneNumber,
+          name: _nameController.text);
+    }
+  }
+
 
   @override
   void dispose() {

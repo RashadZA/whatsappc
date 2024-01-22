@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:whatsappc/domain/entities/user_entity.dart';
+import 'package:whatsappc/presentation/bloc/auth/auth_cubit.dart';
 import 'package:whatsappc/presentation/screens/homeScreen/call_screen.dart';
 import 'package:whatsappc/presentation/screens/homeScreen/camera_screen.dart';
 import 'package:whatsappc/presentation/screens/homeScreen/chat_screen.dart';
@@ -9,7 +12,8 @@ import 'package:whatsappc/presentation/widgets/custom_tabBar.dart';
 import 'package:whatsappc/utils/design_utils.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final UserEntity userInfo;
+  const HomeScreen({super.key, required this.userInfo});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -20,11 +24,13 @@ class _HomeScreenState extends State<HomeScreen> {
   int _currentPageIndex = 1;
   PageController _pageViewController = PageController(initialPage: 1);
   List<Widget> get _pages => [
-    const CameraScreen(),
-    const ChatScreen(),
-    const StatusScreen(),
-    const CallsScreen(),
-  ];
+        const CameraScreen(),
+        ChatScreen(
+          userInfo: widget.userInfo,
+        ),
+        const StatusScreen(),
+        const CallsScreen(),
+      ];
 
   @override
   void initState() {
@@ -39,37 +45,44 @@ class _HomeScreenState extends State<HomeScreen> {
               elevation: 0.0,
               automaticallyImplyLeading: false,
               backgroundColor: _isSearch == false ? primaryColor : transparent,
-              // systemOverlayStyle: SystemUiOverlayStyle(
-              //   statusBarColor: _isSearch == false
-              //       ? primaryColor
-              //       : transparent, // Transparent status bar
-              //   statusBarIconBrightness:
-              //       _isSearch == false ? Brightness.light : Brightness.dark,
-              // ),
               title: _isSearch == false
-                  ? Text(whatsAppClone)
-                  : Container(
+                  ? const Text(whatsAppClone)
+                  : const SizedBox(
                       height: 0.0,
                       width: 0.0,
                     ),
               flexibleSpace: _isSearch == false
-                  ? Container(
+                  ? const SizedBox(
                       height: 0.0,
                       width: 0.0,
                     )
                   : _buildSearch(),
-              actions:  <Widget>[
-                _isSearch ? SizedBox(height: 0.0,width: 0.0,) : InkWell(
-                    onTap: () {
-                      setState(() {
-                        _isSearch = true;
-                      });
-                    },
-                    child: Icon(Icons.search)),
-                SizedBox(
+              actions: <Widget>[
+                _isSearch
+                    ? const SizedBox(
+                        height: 0.0,
+                        width: 0.0,
+                      )
+                    : InkWell(
+                        onTap: () {
+                          setState(() {
+                            _isSearch = true;
+                          });
+                        },
+                        child: const Icon(Icons.search)),
+                const SizedBox(
                   width: 5,
                 ),
-                _isSearch ? SizedBox(height: 0.0,width: 0.0,) : InkWell(onTap: () {}, child: Icon(Icons.more_vert))
+                _isSearch
+                    ? const SizedBox(
+                        height: 0.0,
+                        width: 0.0,
+                      )
+                    : InkWell(
+                        onTap: () {
+                          BlocProvider.of<AuthCubit>(context).loggedOut();
+                        },
+                        child: const Icon(Icons.logout_outlined))
               ],
             )
           : null,
@@ -78,12 +91,15 @@ class _HomeScreenState extends State<HomeScreen> {
           //TODO:CustomTabBar
           _isSearch == false
               ? _currentPageIndex != 0
-              ? CustomTabBar(index: _currentPageIndex)
-              : Container(height: 0.0, width: 0.0,)
-              : Container(
-            height: 0.0,
-            width: 0.0,
-          ),
+                  ? CustomTabBar(index: _currentPageIndex)
+                  : const SizedBox(
+                      height: 0.0,
+                      width: 0.0,
+                    )
+              : const SizedBox(
+                  height: 0.0,
+                  width: 0.0,
+                ),
           Expanded(
             child: PageView.builder(
               itemCount: _pages.length,
@@ -121,20 +137,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-      // child: TextField(
-      //   decoration: InputDecoration(
-      //     hintText: "Search...",
-      //     prefixIcon: InkWell(
-      //       onTap: () {
-      //         //TODO:
-      //         setState(() {
-      //           _isSearch = false;
-      //         });
-      //       },
-      //       child: Icon(Icons.arrow_back),
-      //     ),
-      //   ),
-      // ),
     );
   }
 }

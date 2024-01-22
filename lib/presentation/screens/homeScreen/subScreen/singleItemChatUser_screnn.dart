@@ -2,12 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:whatsappc/utils/design_utils.dart';
 
-class SingleItemChatUserPage extends StatelessWidget {
+class SingleItemChatUserScreen extends StatelessWidget {
   final String time;
   final String recentSendMessage;
   final String name;
 
-  const SingleItemChatUserPage(
+  const SingleItemChatUserScreen(
       {super.key,
       required this.time,
       required this.recentSendMessage,

@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:whatsappc/presentation/bloc/phoneAuth/phone_auth_cubit.dart';
 import 'package:whatsappc/presentation/screens/set_initial_profile_screen.dart';
 import 'package:whatsappc/utils/design_utils.dart';
 
 class PhoneVerificationScreen extends StatefulWidget {
-  const PhoneVerificationScreen({super.key});
+  final String phoneNumber;
+  const PhoneVerificationScreen({super.key, required this.phoneNumber});
 
   @override
   State<PhoneVerificationScreen> createState() => _PhoneVerificationScreenState();
 }
 
 class _PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
+
+  String get _phoneNumber => widget.phoneNumber;
 
   TextEditingController _pinCodeController = TextEditingController();
 
@@ -49,14 +54,7 @@ class _PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
                 alignment: Alignment.bottomCenter,
                 child: MaterialButton(
                   color: greenColor,
-                  onPressed:(){
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => const SetInitialProfileScreen(),
-                        ),
-                            (route) => false);
-                  },
+                  onPressed:_submitSmsCode,
                   child: Text(
                     next,
                     style: AppTextTheme.text18.copyWith(color: whiteColor),
@@ -90,6 +88,12 @@ class _PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
         ],
       ),
     );
+  }
+  void _submitSmsCode(){
+    if (_pinCodeController.text.isNotEmpty){
+      BlocProvider.of<PhoneAuthCubit>(context)
+          .submitSmsCode(smsCode: _pinCodeController.text);
+    }
   }
 
   @override

@@ -30,3 +30,13 @@ const String yourChatListEndHere =  "--- Your chat list end here ---";
 const String yourStatusListEndHere =  "--- Your status list end here ---";
 
 const String recentUpdates = "Recent updates";
+
+//MessageType
+const String text="TEXT";
+const String image="IMAGE";
+const String audio="AUDIO";
+const String video="VIDEO";
+
+//communication Type
+const String oneToOneChat="oneToOneChat";
+const String groupChat="groupChat";
